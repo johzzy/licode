@@ -66,10 +66,16 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 
 # BOOST
-include(${CMAKE_CURRENT_SOURCE_DIR}/../conan_paths.cmake)
+#include(${CMAKE_CURRENT_SOURCE_DIR}/../conan_paths.cmake)
+if (APPLE)
+add_definitions(-D__STDC_CONSTANT_MACROS)
+endif()
+
 set (BOOST_LIBS thread regex system)
-find_package(Boost)
+find_package(Boost COMPONENTS thread regex system REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
+message(STATUS "Hello====== 1 ${boost_INCLUDE_DIRS} 2 ${boost_LIB_DIRS} 3 ${Boost_INCLUDE_DIRS} 4 ${Boost_LIBRARY_DIRS} 5 ${Boost_LIBRARIES}")
+link_libraries(${BOOST_ROOT}/lib/libboost_thread-mt.dylib)
 
 set(ERIZO_CMAKE_CXX_FLAGS "${ERIZO_CMAKE_CXX_FLAGS} -DBOOST_THREAD_PROVIDES_FUTURE -DBOOST_THREAD_PROVIDES_FUTURE_CONTINUATION -DBOOST_THREAD_PROVIDES_FUTURE_WHEN_ALL_WHEN_ANY")
 

@@ -62,7 +62,7 @@ install_erizo(){
   cd utils/conan-include-paths
   conan export . lynckia/includes
   cd ../..
-  conan install . --build IncludePathsGenerator
+  # conan install . --build IncludePathsGenerator --build boost
   ./generateProject.sh
   ./buildProject.sh $FAST_MAKE
   if [ "$DELETE_OBJECT_FILES" == "true" ]; then
