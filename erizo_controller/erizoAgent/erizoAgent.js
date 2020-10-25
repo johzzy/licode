@@ -1,5 +1,8 @@
 /* global require */
 
+console.log(`dirname=${__dirname}`)
+process.chdir(__dirname)
+
 // eslint-disable-next-line import/no-extraneous-dependencies
 const Getopt = require('node-getopt');
 

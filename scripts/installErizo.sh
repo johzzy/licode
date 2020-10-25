@@ -75,10 +75,12 @@ install_erizo(){
 install_erizo_api(){
   echo 'Installing erizoAPI...'
   cd $ROOT/erizoAPI
-  . $NVM_CHECK
-  nvm use
+  # . $NVM_CHECK
+  # nvm use
+  echo "11111111111: $FAST_BUILD npm install --unsafe-perm"
   $FAST_BUILD npm install --unsafe-perm
   check_result $?
+  echo 22222222222
   cd $CURRENT_DIR
 }
 

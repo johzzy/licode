@@ -9,7 +9,7 @@ ROOT=$PATHNAME/..
 NVM_CHECK="$ROOT"/scripts/checkNvm.sh
 CURRENT_DIR=`pwd`
 
-. $NVM_CHECK
+# . $NVM_CHECK
 
 cd $PATHNAME/nuveAPI
 

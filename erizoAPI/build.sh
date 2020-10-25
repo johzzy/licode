@@ -9,8 +9,8 @@ ROOT=$PATHNAME/..
 CURRENT_DIR=`pwd`
 NVM_CHECK="$ROOT"/scripts/checkNvm.sh
 
-. $NVM_CHECK
-nvm use
+# . $NVM_CHECK
+# nvm use
 
 echo 'linting with cpplint'
 ./lint.sh

@@ -10,10 +10,10 @@ NVM_CHECK="$LICODE_ROOT"/scripts/checkNvm.sh
 
 export LD_LIBRARY_PATH="$LICODE_ROOT/build/libdeps/build/lib"
 
-. $NVM_CHECK
+# . $NVM_CHECK
 
 cd $ROOT/erizoAgent
-nvm use
+# nvm use
 node erizoAgent.js $* &
 
 cd $CURRENT_DIR
