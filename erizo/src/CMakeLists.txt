@@ -126,6 +126,7 @@ else()
 endif()
 set(GMOCK_BUILD "${CMAKE_CURRENT_BINARY_DIR}/libdeps/gmock")
 set(GMOCK_VERSION "1.8.0")
+#add_definitions(-DGMOCK_USE_OVERRIDE)
 ExternalProject_Add(gtest
   URL "https://github.com/google/googletest/archive/release-${GMOCK_VERSION}.tar.gz"
   PREFIX ${GMOCK_BUILD}

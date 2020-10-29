@@ -106,13 +106,13 @@ class BasicConnectionQualityCheckTest {
 };
 
 class ConnectionQualityCheckTest : public BasicConnectionQualityCheckTest,
-  public ::testing::TestWithParam<std::tr1::tuple<FractionLostList, FractionLostList,
+  public ::testing::TestWithParam<std::tuple<FractionLostList, FractionLostList,
                                                   ConnectionQualityLevel>> {
  protected:
   virtual void SetUp() {
-    fraction_lost_list = std::tr1::get<0>(GetParam());
-    publisher_fraction_lost_list = std::tr1::get<1>(GetParam());
-    expected_quality_level = std::tr1::get<2>(GetParam());
+    fraction_lost_list = std::get<0>(GetParam());
+    publisher_fraction_lost_list = std::get<1>(GetParam());
+    expected_quality_level = std::get<2>(GetParam());
 
     connection_quality_check = std::make_shared<erizo::ConnectionQualityCheck>();
 

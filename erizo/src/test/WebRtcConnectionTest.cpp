@@ -31,7 +31,7 @@ typedef std::vector<bool>     EnabledList;
 typedef std::vector<int32_t>  ExpectedList;
 
 class WebRtcConnectionTest :
-  public ::testing::TestWithParam<std::tr1::tuple<BitrateList,
+  public ::testing::TestWithParam<std::tuple<BitrateList,
                                                   uint32_t,
                                                   EnabledList,
                                                   ExpectedList>> {
@@ -50,10 +50,10 @@ class WebRtcConnectionTest :
     connection->setTransport(transport);
     connection->updateState(TRANSPORT_READY, transport.get());
     connection->init();
-    video_bitrate_list = std::tr1::get<0>(GetParam());
-    bitrate_value = std::tr1::get<1>(GetParam());
-    add_to_remb_list = std::tr1::get<2>(GetParam());
-    expected_bitrates = std::tr1::get<3>(GetParam());
+    video_bitrate_list = std::get<0>(GetParam());
+    bitrate_value = std::get<1>(GetParam());
+    add_to_remb_list = std::get<2>(GetParam());
+    expected_bitrates = std::get<3>(GetParam());
 
     setUpStreams();
   }

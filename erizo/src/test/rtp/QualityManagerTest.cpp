@@ -291,14 +291,14 @@ TEST_F(QualityManagerTest, shouldGoBelowMinDesiredSpatialLayerIfNotAvailable) {
 }
 
 class QualityManagerConstraintsTest : public QualityManagerBaseTest,
-                           public ::testing::TestWithParam<std::tr1::tuple<int, int, int, int, int>> {
+                           public ::testing::TestWithParam<std::tuple<int, int, int, int, int>> {
  public:
   QualityManagerConstraintsTest() {
-    max_video_width = std::tr1::get<0>(GetParam());
-    max_video_height = std::tr1::get<1>(GetParam());
-    max_frame_rate = std::tr1::get<2>(GetParam());
-    expected_spatial_layer = std::tr1::get<3>(GetParam());
-    expected_temporal_layer = std::tr1::get<4>(GetParam());
+    max_video_width = std::get<0>(GetParam());
+    max_video_height = std::get<1>(GetParam());
+    max_frame_rate = std::get<2>(GetParam());
+    expected_spatial_layer = std::get<3>(GetParam());
+    expected_temporal_layer = std::get<4>(GetParam());
   }
 
   void setHandler() override {

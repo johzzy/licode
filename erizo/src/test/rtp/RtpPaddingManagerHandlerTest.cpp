@@ -172,13 +172,13 @@ TEST_F(RtpPaddingManagerHandlerTest, shouldDistributePaddingEvenlyAmongStreamsWi
 typedef std::vector<uint32_t> SubscriberBitratesList;
 
 class RtpPaddingManagerHandlerTestWithParam : public RtpPaddingManagerHandlerBaseTest,
-  public ::testing::TestWithParam<std::tr1::tuple<SubscriberBitratesList, uint32_t, uint32_t, uint64_t>> {
+  public ::testing::TestWithParam<std::tuple<SubscriberBitratesList, uint32_t, uint32_t, uint64_t>> {
  public:
   RtpPaddingManagerHandlerTestWithParam() {
-    subscribers = std::tr1::get<0>(GetParam());
-    bw_estimation = std::tr1::get<1>(GetParam());
-    video_bitrate = std::tr1::get<2>(GetParam());
-    expected_padding_bitrate = std::tr1::get<3>(GetParam());
+    subscribers = std::get<0>(GetParam());
+    bw_estimation = std::get<1>(GetParam());
+    video_bitrate = std::get<2>(GetParam());
+    expected_padding_bitrate = std::get<3>(GetParam());
   }
 
  protected:

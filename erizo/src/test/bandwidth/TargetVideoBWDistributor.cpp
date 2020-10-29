@@ -129,17 +129,17 @@ class BasicTargetVideoBWDistributor {
 };
 
 class TargetVideoBWDistributorTest : public BasicTargetVideoBWDistributor,
-  public ::testing::TestWithParam<std::tr1::tuple<StreamConfigList,
+  public ::testing::TestWithParam<std::tuple<StreamConfigList,
                                                   uint32_t,
                                                   EnabledList,
                                                   ExpectedList>> {
  protected:
   virtual void SetUp() {
     index = 0;
-    stream_config_list = std::tr1::get<0>(GetParam());
-    bitrate_value = std::tr1::get<1>(GetParam());
-    add_to_remb_list = std::tr1::get<2>(GetParam());
-    expected_bitrates = std::tr1::get<3>(GetParam());
+    stream_config_list = std::get<0>(GetParam());
+    bitrate_value = std::get<1>(GetParam());
+    add_to_remb_list = std::get<2>(GetParam());
+    expected_bitrates = std::get<3>(GetParam());
 
     distributor = std::make_shared<erizo::TargetVideoBWDistributor>();
 

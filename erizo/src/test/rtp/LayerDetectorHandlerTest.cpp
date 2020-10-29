@@ -42,15 +42,15 @@ constexpr uint32_t kArbitrarySsrc1 = 1001;
 constexpr uint32_t kArbitrarySsrc2 = 1002;
 
 class LayerDetectorHandlerVp8Test : public erizo::BaseHandlerTest,
-                                    public ::testing::TestWithParam<std::tr1::tuple<int, int, int, bool, int, bool>> {
+                                    public ::testing::TestWithParam<std::tuple<int, int, int, bool, int, bool>> {
  public:
   LayerDetectorHandlerVp8Test() {
-    ssrc = std::tr1::get<0>(GetParam());
-    tid = std::tr1::get<1>(GetParam());
-    spatial_layer_id = std::tr1::get<2>(GetParam());
-    spatial_layer_supported = std::tr1::get<3>(GetParam());
-    temporal_layer_id = std::tr1::get<4>(GetParam());
-    temporal_layer_supported = std::tr1::get<5>(GetParam());
+    ssrc = std::get<0>(GetParam());
+    tid = std::get<1>(GetParam());
+    spatial_layer_id = std::get<2>(GetParam());
+    spatial_layer_supported = std::get<3>(GetParam());
+    temporal_layer_id = std::get<4>(GetParam());
+    temporal_layer_supported = std::get<5>(GetParam());
   }
 
  protected:
