@@ -11,7 +11,7 @@ BUILD_DIR=$ROOT/build
 CURRENT_DIR=`pwd`
 DB_DIR="$BUILD_DIR"/db
 
-. $NVM_CHECK
+# . $NVM_CHECK
 
 cd $PATHNAME
 
@@ -19,7 +19,7 @@ cd nuveAPI
 
 echo [nuve] Installing node_modules for nuve
 
-nvm use
+# nvm use
 npm install --loglevel error
 echo [nuve] Done, node_modules installed
 

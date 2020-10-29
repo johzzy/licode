@@ -59,7 +59,7 @@ int VideoEncoder::initEncoder(const VideoCodecInfo& info) {
   coder_context_->qmax = 40;  // rc_quantifiers
   coder_context_->profile = 3;
   // coder_context_->frame_skip_threshold = 30;
-  coder_context_->rc_buffer_aggressivity = 0.95;
+//  coder_context_->rc_buffer_aggressivity = 0.95;
   // coder_context_->rc_buffer_size = coder_context_->bit_rate;
   // coder_context_->rc_initial_buffer_occupancy = coder_context_->bit_rate / 2;
   coder_context_->rc_initial_buffer_occupancy = 500;
@@ -70,7 +70,7 @@ int VideoEncoder::initEncoder(const VideoCodecInfo& info) {
   coder_context_->height = info.height;
   target_width_ = info.width;
   target_height_ = info.height;
-  coder_context_->pix_fmt = PIX_FMT_YUV420P;
+  coder_context_->pix_fmt = AV_PIX_FMT_YUV420P;
   coder_context_->time_base = (AVRational) {1, 90000};
 
   coder_context_->sample_aspect_ratio = (AVRational) { info.width, info.height };
@@ -133,7 +133,7 @@ void VideoEncoder::restartContext() {
   next_coder_context_->qmax = 40;  // rc_quantifiers
   next_coder_context_->profile = 3;
   // next_coder_context_->frame_skip_threshold = 30;
-  next_coder_context_->rc_buffer_aggressivity = 0.95;
+//  next_coder_context_->rc_buffer_aggressivity = 0.95;
   // next_coder_context_->rc_buffer_size = next_coder_context_->bit_rate;
   // next_coder_context_->rc_initial_buffer_occupancy = next_coder_context_->bit_rate / 2;
   next_coder_context_->rc_initial_buffer_occupancy = 500;
@@ -142,7 +142,7 @@ void VideoEncoder::restartContext() {
 
   next_coder_context_->width = target_width_;
   next_coder_context_->height = target_height_;
-  next_coder_context_->pix_fmt = PIX_FMT_YUV420P;
+  next_coder_context_->pix_fmt = AV_PIX_FMT_YUV420P;
   next_coder_context_->time_base = (AVRational) {1, 90000};
 
   next_coder_context_->sample_aspect_ratio = (AVRational) { target_width_, target_height_ };

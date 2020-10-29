@@ -17,8 +17,9 @@ check_readlink() {
   fi
 
 }
-command -v nvm | grep 'nvm' &> /dev/null
-if [ ! $? == 0 ]; then
+# command -v nvm | grep 'nvm' &> /dev/null; ret=$?
+ret=0
+if [ $ret -ne 0 ]; then
   check_readlink
   CHECK_SCRIPT=$($READLINK -f "$0")
   CHECK_SCRIPT_PATH=$(dirname "$CHECK_SCRIPT")

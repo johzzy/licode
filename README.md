@@ -28,3 +28,11 @@ This project adheres to the Contributor Covenant code of conduct. By participati
 
 More info at:
 http://www.lynckia.com/licode
+
+
+
+## How to BUILD? (this section edited by Johnny)
+
+SEE [Johnny Note](/doc/johnny/README.md)
+
+

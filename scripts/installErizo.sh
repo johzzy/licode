@@ -62,7 +62,6 @@ install_erizo(){
   cd utils/conan-include-paths
   conan export . lynckia/includes
   cd ../..
-  conan install . --build IncludePathsGenerator
   ./generateProject.sh
   ./buildProject.sh $FAST_MAKE
   if [ "$DELETE_OBJECT_FILES" == "true" ]; then
@@ -75,8 +74,8 @@ install_erizo(){
 install_erizo_api(){
   echo 'Installing erizoAPI...'
   cd $ROOT/erizoAPI
-  . $NVM_CHECK
-  nvm use
+  # . $NVM_CHECK
+  # nvm use
   $FAST_BUILD npm install --unsafe-perm
   check_result $?
   cd $CURRENT_DIR

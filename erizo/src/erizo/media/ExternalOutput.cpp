@@ -390,9 +390,9 @@ bool ExternalOutput::initContext() {
     video_stream_->metadata = genVideoMetadata();
     // A decent guess here suffices; if processing the file with ffmpeg,
     // use -vsync 0 to force it not to duplicate frames.
-    video_stream_->codec->pix_fmt = PIX_FMT_YUV420P;
+    video_stream_->codec->pix_fmt = AV_PIX_FMT_YUV420P;
     if (context_->oformat->flags & AVFMT_GLOBALHEADER) {
-      video_stream_->codec->flags |= CODEC_FLAG_GLOBAL_HEADER;
+      video_stream_->codec->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
     }
     context_->oformat->flags |= AVFMT_VARIABLE_FPS;
 
@@ -409,7 +409,7 @@ bool ExternalOutput::initContext() {
     audio_stream_->time_base = (AVRational) { 1, audio_stream_->codec->sample_rate };
     audio_stream_->codec->channels = audio_map_.channels;
     if (context_->oformat->flags & AVFMT_GLOBALHEADER) {
-      audio_stream_->codec->flags |= CODEC_FLAG_GLOBAL_HEADER;
+      audio_stream_->codec->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
     }
 
     context_->streams[0] = video_stream_;

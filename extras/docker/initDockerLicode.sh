@@ -51,8 +51,6 @@ parse_arguments(){
 }
 
 run_nvm() {
-  echo "Running NVM"
-  . $ROOT/build/libdeps/nvm/nvm.sh
 
 }
 check_result() {

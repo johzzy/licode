@@ -14,8 +14,8 @@
           'xcode_settings': {
             'GCC_ENABLE_CPP_EXCEPTIONS': 'YES',        # -fno-exceptions
             'GCC_ENABLE_CPP_RTTI': 'YES',              # -fno-rtti
-            'MACOSX_DEPLOYMENT_TARGET' : '10.11',      #from MAC OS 10.7
-            'OTHER_CFLAGS': ['-Werror -Qunused-arguments -g -O3 -stdlib=libc++ -std=c++11 -DBOOST_THREAD_PROVIDES_FUTURE -DBOOST_THREAD_PROVIDES_FUTURE_CONTINUATION -DBOOST_THREAD_PROVIDES_FUTURE_WHEN_ALL_WHEN_ANY @$(ERIZO_HOME)/conanbuildinfo.args',]
+            'MACOSX_DEPLOYMENT_TARGET' : '10.15',      #from MAC OS 10.7
+            'OTHER_CFLAGS': ['-Werror -Qunused-arguments -g -O3 -stdlib=libc++ -std=c++17 -DBOOST_THREAD_PROVIDES_FUTURE -DBOOST_THREAD_PROVIDES_FUTURE_CONTINUATION -DBOOST_THREAD_PROVIDES_FUTURE_WHEN_ALL_WHEN_ANY',]
           },
         }, { # OS!="mac"
           'cflags!' : ['-fno-exceptions'],
@@ -36,8 +36,8 @@
           'xcode_settings': {
             'GCC_ENABLE_CPP_EXCEPTIONS': 'YES',        # -fno-exceptions
             'GCC_ENABLE_CPP_RTTI': 'YES',              # -fno-rtti
-            'MACOSX_DEPLOYMENT_TARGET' : '10.11',      #from MAC OS 10.7
-            'OTHER_CFLAGS': ['-Werror -Qunused-arguments -g -stdlib=libc++ -std=c++11 -DBOOST_THREAD_PROVIDES_FUTURE -DBOOST_THREAD_PROVIDES_FUTURE_CONTINUATION -DBOOST_THREAD_PROVIDES_FUTURE_WHEN_ALL_WHEN_ANY @$(ERIZO_HOME)/conanbuildinfo.args']
+            'MACOSX_DEPLOYMENT_TARGET' : '10.15',      #from MAC OS 10.7
+            'OTHER_CFLAGS': ['-Werror -Qunused-arguments -g -stdlib=libc++ -std=c++17 -DBOOST_THREAD_PROVIDES_FUTURE -DBOOST_THREAD_PROVIDES_FUTURE_CONTINUATION -DBOOST_THREAD_PROVIDES_FUTURE_WHEN_ALL_WHEN_ANY']
           },
         }, { # OS!="mac"
           'cflags!' : ['-fno-exceptions'],
