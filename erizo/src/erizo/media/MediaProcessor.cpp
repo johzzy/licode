@@ -35,7 +35,6 @@ InputProcessor::InputProcessor() {
   decodedAudioBuffer_ = NULL;
   unpackagedAudioBuffer_ = NULL;
 
-  av_register_all();
 }
 
 InputProcessor::~InputProcessor() {
@@ -326,8 +325,6 @@ OutputProcessor::OutputProcessor() {
   encodedAudioBuffer_ = NULL;
   packagedAudioBuffer_ = NULL;
 
-  avcodec_register_all();
-  av_register_all();
 }
 
 OutputProcessor::~OutputProcessor() {

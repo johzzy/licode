@@ -24,7 +24,6 @@ inline AVCodecID VideoCodecID2ffmpegDecoderID(VideoCodecID codec) {
 }
 
 VideoEncoder::VideoEncoder() {
-  avcodec_register_all();
   vCoder = NULL;
   coder_context_ = NULL;
   cPicture = NULL;
@@ -59,7 +58,7 @@ int VideoEncoder::initEncoder(const VideoCodecInfo& info) {
   coder_context_->qmax = 40;  // rc_quantifiers
   coder_context_->profile = 3;
   // coder_context_->frame_skip_threshold = 30;
-//  coder_context_->rc_buffer_aggressivity = 0.95;
+  // coder_context_->rc_buffer_aggressivity = 0.95;
   // coder_context_->rc_buffer_size = coder_context_->bit_rate;
   // coder_context_->rc_initial_buffer_occupancy = coder_context_->bit_rate / 2;
   coder_context_->rc_initial_buffer_occupancy = 500;
@@ -133,7 +132,7 @@ void VideoEncoder::restartContext() {
   next_coder_context_->qmax = 40;  // rc_quantifiers
   next_coder_context_->profile = 3;
   // next_coder_context_->frame_skip_threshold = 30;
-//  next_coder_context_->rc_buffer_aggressivity = 0.95;
+  // next_coder_context_->rc_buffer_aggressivity = 0.95;
   // next_coder_context_->rc_buffer_size = next_coder_context_->bit_rate;
   // next_coder_context_->rc_initial_buffer_occupancy = next_coder_context_->bit_rate / 2;
   next_coder_context_->rc_initial_buffer_occupancy = 500;
@@ -204,7 +203,6 @@ int VideoEncoder::closeEncoder() {
 
 
 VideoDecoder::VideoDecoder() {
-  avcodec_register_all();
   vDecoder = NULL;
   vDecoderContext = NULL;
   dPicture = NULL;
@@ -354,7 +352,7 @@ decoding:
     cromV += dst_linesize;
     src += src_linesize;
   }
-  av_free_packet(&avpkt);
+  av_packet_unref(&avpkt);
 
   return outSize * 3 / 2;
 }

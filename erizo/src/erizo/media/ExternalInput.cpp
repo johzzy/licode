@@ -27,7 +27,7 @@ ExternalInput::~ExternalInput() {
   thread_.join();
   if (needTranscoding_)
     encodeThread_.join();
-  av_free_packet(&avpacket_);
+  av_packet_unref(&avpacket_);
   if (context_ != NULL)
     avformat_free_context(context_);
   ELOG_DEBUG("ExternalInput closed");
@@ -35,8 +35,6 @@ ExternalInput::~ExternalInput() {
 
 int ExternalInput::init() {
   context_ = avformat_alloc_context();
-  av_register_all();
-  avcodec_register_all();
   avformat_network_init();
   // open rtsp
   av_init_packet(&avpacket_);
@@ -282,7 +280,7 @@ void ExternalInput::receiveLoop() {
         }
       }
     }
-    av_free_packet(&orig_pkt);
+    av_packet_unref(&orig_pkt);
   }
   ELOG_DEBUG("Ended stream to play %s", url_.c_str());
   running_ = false;

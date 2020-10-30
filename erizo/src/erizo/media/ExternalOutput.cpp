@@ -32,8 +32,6 @@ ExternalOutput::ExternalOutput(std::shared_ptr<Worker> worker, const std::string
   ELOG_DEBUG("Creating output to %s", output_url.c_str());
 
   // TODO(pedro): these should really only be called once per application run
-  av_register_all();
-  avcodec_register_all();
 
   fec_receiver_.reset(webrtc::UlpfecReceiver::Create(this));
   stats_ = std::make_shared<Stats>();
@@ -56,11 +54,11 @@ ExternalOutput::ExternalOutput(std::shared_ptr<Worker> worker, const std::string
   if (context_ == nullptr) {
     ELOG_ERROR("Error allocating memory for IO context");
   } else {
-    output_url.copy(context_->filename, sizeof(context_->filename), 0);
+    output_url.copy(context_->url, strlen(context_->url), 0);
 
-    context_->oformat = av_guess_format(nullptr,  context_->filename, nullptr);
+    context_->oformat = av_guess_format(nullptr,  context_->url, nullptr);
     if (!context_->oformat) {
-      ELOG_ERROR("Error guessing format %s", context_->filename);
+      ELOG_ERROR("Error guessing format %s", context_->url);
     }
   }
 
@@ -414,7 +412,7 @@ bool ExternalOutput::initContext() {
 
     context_->streams[0] = video_stream_;
     context_->streams[1] = audio_stream_;
-    if (avio_open(&context_->pb, context_->filename, AVIO_FLAG_WRITE) < 0) {
+    if (avio_open(&context_->pb, context_->url, AVIO_FLAG_WRITE) < 0) {
       ELOG_ERROR("Error opening output file");
       return false;
     }
@@ -456,7 +454,7 @@ void ExternalOutput::queueData(char* buffer, int length, packetType type) {
     uint8_t payloadtype = h->getPayloadType();
     if (video_offset_ms_ == -1) {
       video_offset_ms_ = ClockUtils::durationToMs(clock::now() - first_data_received_);
-      ELOG_DEBUG("File %s, video offset msec: %llu", context_->filename, video_offset_ms_);
+      ELOG_DEBUG("File %s, video offset msec: %llu", context_->url, video_offset_ms_);
       video_queue_.setTimebase(video_maps_[payloadtype].clock_rate);
     }
 
@@ -484,7 +482,7 @@ void ExternalOutput::queueData(char* buffer, int length, packetType type) {
   } else {
     if (audio_offset_ms_ == -1) {
       audio_offset_ms_ = ClockUtils::durationToMs(clock::now() - first_data_received_);
-      ELOG_DEBUG("File %s, audio offset msec: %llu", context_->filename, audio_offset_ms_);
+      ELOG_DEBUG("File %s, audio offset msec: %llu", context_->url, audio_offset_ms_);
 
       // Let's also take a moment to set our audio queue timebase.
       RtpHeader* h = reinterpret_cast<RtpHeader*>(buffer);
