@@ -11,10 +11,14 @@ project (WEBRTC)
 
 set (WEBRTC_SOURCE ${CMAKE_CURRENT_SOURCE_DIR})
 
-set(CMAKE_CXX_FLAGS "-g -Wall -std=c++11 -DWEBRTC_POSIX")
+set(CMAKE_CXX_FLAGS "-g -Wall -std=c++14 -DWEBRTC_POSIX")
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -fno-stack-protector -DWEBRTC_MAC")
+  find_library(CORE_FOUNDATION Foundation)
+  find_library(APPLICATION_SERVICES ApplicationServices)
+  find_library(CORE_SERVICES CoreServices)
+  set(EXTRA_LIBS ${CORE_FOUNDATION} ${APPLICATION_SERVICES} ${CORE_SERVICES})
 ELSE()
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -DWEBRTC_LINUX")
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
@@ -28,4 +32,4 @@ add_library(webrtc STATIC ${WEBRTC_SOURCES} )
 
 target_include_directories(webrtc PUBLIC ${WEBRTC_SOURCE_DIR})
 
-target_link_libraries(webrtc ${LOG})
+target_link_libraries(webrtc ${LOG} ${EXTRA_LIBS})

@@ -72,10 +72,11 @@ add_definitions(-D__STDC_CONSTANT_MACROS)
 endif()
 
 set (BOOST_LIBS thread regex system)
-find_package(Boost COMPONENTS thread regex system REQUIRED)
+find_package(Boost COMPONENTS ${BOOST_LIBS} REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
-message(STATUS "Hello====== 1 ${boost_INCLUDE_DIRS} 2 ${boost_LIB_DIRS} 3 ${Boost_INCLUDE_DIRS} 4 ${Boost_LIBRARY_DIRS} 5 ${Boost_LIBRARIES}")
-link_libraries(${BOOST_ROOT}/lib/libboost_thread-mt.dylib)
+message(STATUS "Hello====== 1 ${Boost_INCLUDE_DIRS} 2 ${Boost_LIBRARY_DIRS} 3 ${Boost_LIBRARIES}")
+link_libraries(${Boost_LIBRARIES})
+# link_libraries(${BOOST_ROOT}/lib/libboost_thread-mt.dylib)
 
 set(ERIZO_CMAKE_CXX_FLAGS "${ERIZO_CMAKE_CXX_FLAGS} -DBOOST_THREAD_PROVIDES_FUTURE -DBOOST_THREAD_PROVIDES_FUTURE_CONTINUATION -DBOOST_THREAD_PROVIDES_FUTURE_WHEN_ALL_WHEN_ANY")
 
@@ -91,13 +92,13 @@ find_library(CRYPTO crypto HINTS "${THIRD_PARTY_LIB}")
 test_lib(${CRYPTO})
 
 # Libav
-find_library(AVUTIL avutil HINTS "${THIRD_PARTY_LIB}")
+find_library(AVUTIL avutil)
 test_lib(${AVUTIL})
 set (LIBS ${AVUTIL})
-find_library(AVCODEC avcodec HINTS "${THIRD_PARTY_LIB}")
+find_library(AVCODEC avcodec)
 test_lib(${AVCODEC})
 set (LIBS ${LIBS} ${AVCODEC})
-find_library(AVFORMAT avformat HINTS "${THIRD_PARTY_LIB}")
+find_library(AVFORMAT avformat)
 test_lib(${AVFORMAT})
 set (LIBS ${LIBS} ${AVFORMAT})
 
