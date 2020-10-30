@@ -31,6 +31,7 @@ void RtcpFeedbackGenerationHandler::read(Context *ctx, std::shared_ptr<DataPacke
     uint32_t ssrc = chead->getSSRC();
     auto generator_it = generators_map_.find(ssrc);
     if (generator_it != generators_map_.end()) {
+      // note: 处理sr
       generator_it->second->rr_generator->handleSr(packet);
     } else {
       ELOG_DEBUG("message: no RrGenerator found, ssrc: %u", ssrc);
@@ -47,6 +48,7 @@ void RtcpFeedbackGenerationHandler::read(Context *ctx, std::shared_ptr<DataPacke
     bool is_audio = stream_->isAudioSourceSSRC(ssrc) || stream_->isAudioSinkSSRC(ssrc);
     auto generator_it = generators_map_.find(ssrc);
     if (generator_it != generators_map_.end()) {
+        // note: 处理rtp
         should_send_rr = generator_it->second->rr_generator->handleRtpPacket(packet);
         if (nacks_enabled_) {
           should_send_nack = generator_it->second->nack_generator->handleRtpPacket(packet);
@@ -57,6 +59,7 @@ void RtcpFeedbackGenerationHandler::read(Context *ctx, std::shared_ptr<DataPacke
 
     if (should_send_rr || should_send_nack) {
       ELOG_DEBUG("message: Should send Rtcp, ssrc %u", ssrc);
+      // note: 生成rr
       std::shared_ptr<DataPacket> rtcp_packet = generator_it->second->rr_generator->generateReceiverReport();
       notifyReceiverReportInfo(rtcp_packet, is_audio);
       if (nacks_enabled_ && generator_it->second->nack_generator != nullptr) {
@@ -103,6 +106,7 @@ void RtcpFeedbackGenerationHandler::notifyUpdate() {
     if (video_ssrc != 0) {
       auto video_generator = std::make_shared<RtcpGeneratorPair>();
       generators_map_[video_ssrc] = video_generator;
+      // note: 构造参数
       auto video_rr = std::make_shared<RtcpRrGenerator>(video_ssrc, VIDEO_PACKET, clock_);
       video_generator->rr_generator = video_rr;
       ELOG_DEBUG("%s, message: Initialized video rrGenerator, ssrc: %u", stream_->toLog(), video_ssrc);
@@ -117,6 +121,7 @@ void RtcpFeedbackGenerationHandler::notifyUpdate() {
   if (audio_ssrc != 0) {
     auto audio_generator = std::make_shared<RtcpGeneratorPair>();
     generators_map_[audio_ssrc] = audio_generator;
+    // note: 构造参数
     auto audio_rr = std::make_shared<RtcpRrGenerator>(audio_ssrc, AUDIO_PACKET, clock_);
     audio_generator->rr_generator = audio_rr;
     ELOG_DEBUG("%s, message: Initialized audio, ssrc: %u", stream_->toLog(), audio_ssrc);
