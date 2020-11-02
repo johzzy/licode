@@ -1,9 +1,15 @@
+#pragma once
+
 #include <OneToManyProcessor.h>
+#include <thread/IOThreadPool.h>
+#include <thread/ThreadPool.h>
+#include <WebRtcConnection.h>
 
-class SDPReceiver {
-
+class SDPReceiver : public erizo::WebRtcConnectionEventListener {
 public:
-
+  void notifyEvent(erizo::WebRTCEvent newEvent, const std::string& message) override {
+    // todo
+  }
 	SDPReceiver();
 	virtual ~SDPReceiver(){};
 	bool createPublisher(std::string peer_id);
@@ -13,6 +19,7 @@ public:
 	void peerDisconnected(std::string peer_id);
 
 private:
-
-	erizo::OneToManyProcessor* muxer;
+  std::unique_ptr<erizo::ThreadPool> thread_pool;
+  std::unique_ptr<erizo::IOThreadPool> io_thread_pool;
+  std::shared_ptr<erizo::OneToManyProcessor> muxer;
 };
