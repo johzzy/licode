@@ -92,7 +92,9 @@ void Test::rec() {
 		memset(buff, 0, 2000);
 //
 		a = socket_->receive(boost::asio::buffer(buff, 2000));
-		ip->receiveVideoData(buff, a);
+                unsigned char outBuff[2048];
+                int length=2048;
+		ip->unpackageVideo((unsigned char *)buff, a, outBuff, &length);
 //		printf("********* RECEPCIÓN *********\n");
 //		printf("Bytes = %d\n", a);
 //
@@ -157,6 +159,9 @@ void Test::send(char *buff, int buffSize) {
 //	free(buffSend2);
 //
 //	printf("\n*************************");
+}
+void Test::receiveRawData(const RawDataPacket &packet) {
+  // todo
 }
 
 }

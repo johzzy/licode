@@ -7,13 +7,14 @@
 #include <OneToManyProcessor.h>
 #include <SdpInfo.h>
 #include <WebRtcConnection.h>
-#include <LibNiceConnection.h>
+// #include <LibNiceConnection.h>
+// #include <NicerConnection.h>
 #include "Test.h"
 #include "pc/Observer.h"
 
 using namespace erizo;
 
-int publisherid = 0;
+std::string publisherid = "0";
 int main() {
 
 	new Test();
@@ -29,9 +30,9 @@ SDPReceiver::SDPReceiver() {
 	muxer = new erizo::OneToManyProcessor();
 }
 
-bool SDPReceiver::createPublisher(int peer_id) {
-	if (muxer->publisher == NULL) {
-		printf("Adding publisher peer_id %d\n", peer_id);
+bool SDPReceiver::createPublisher(std::string peer_id) {
+	if (muxer->getPublisher() == NULL) {
+		printf("Adding publisher peer_id %s\n", peer_id.c_str());
 		WebRtcConnection *newConn = new WebRtcConnection;
 		newConn->init();
 		newConn->setAudioReceiver(muxer);
@@ -44,8 +45,8 @@ bool SDPReceiver::createPublisher(int peer_id) {
 	}
 	return true;
 }
-bool SDPReceiver::createSubscriber(int peer_id) {
-	printf("Adding Subscriber peerid %d\n", peer_id);
+bool SDPReceiver::createSubscriber(std::string peer_id) {
+	printf("Adding Subscriber peerid %s\n", peer_id.c_str());
 	if (muxer->subscribers.find(peer_id) != muxer->subscribers.end()) {
 		printf("OFFER AGAIN\n");
 		return false;
@@ -56,27 +57,26 @@ bool SDPReceiver::createSubscriber(int peer_id) {
 	muxer->addSubscriber(newConn, peer_id);
 	return true;
 }
-void SDPReceiver::setRemoteSDP(int peer_id, const std::string &sdp) {
+void SDPReceiver::setRemoteSDP(std::string peer_id, const std::string &sdp) {
 	if (peer_id == publisherid) {
-		muxer->publisher->setRemoteSdp(sdp);
-
+		muxer->getPublisher()->setRemoteSdp(sdp);
 	} else {
-		muxer->subscribers[peer_id]->setRemoteSdp(sdp);
+		muxer->getSubscriber(peer_id)->setRemoteSdp(sdp);
 	}
 }
-std::string SDPReceiver::getLocalSDP(int peer_id) {
+std::string SDPReceiver::getLocalSDP(std::string peer_id) {
 	std::string sdp;
 	if (peer_id == publisherid) {
-		sdp = muxer->publisher->getLocalSdp();
+		sdp = muxer->getPublisher()->getLocalSdp();
 	} else {
-		sdp = muxer->subscribers[peer_id]->getLocalSdp();
+		sdp = muxer->getSubscriber(peer_id)->getLocalSdp();
 	}
 	printf("Getting localSDP %s\n", sdp.c_str());
 	return sdp;
 }
-void SDPReceiver::peerDisconnected(int peer_id) {
+void SDPReceiver::peerDisconnected(std::string peer_id) {
 	if (peer_id != publisherid) {
-		printf("removing peer %d\n", peer_id);
+		printf("removing peer %s\n", peer_id.c_str());
 		muxer->removeSubscriber(peer_id);
 	}
 }

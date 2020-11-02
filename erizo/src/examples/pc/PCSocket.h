@@ -12,8 +12,8 @@ public:
   virtual void OnSignedIn() = 0;  // Called when we're logged on.
   virtual void OnDisconnected() = 0;
   virtual void OnPeerConnected(int id, const std::string& name) = 0;
-  virtual void OnPeerDisconnected(int peer_id) = 0;
-  virtual void OnMessageFromPeer(int peer_id, const std::string& message) = 0;
+  virtual void OnPeerDisconnected(std::string peer_id) = 0;
+  virtual void OnMessageFromPeer(std::string peer_id, const std::string& message) = 0;
   virtual void OnMessageSent(int err) = 0;
   virtual ~PCClientObserver() {}
 };
@@ -39,7 +39,7 @@ class PC {
 
   bool Connect(const std::string& client_name);
 
-  bool SendToPeer(int peer_id, const std::string& message);
+  bool SendToPeer(std::string peer_id, const std::string& message);
   bool SendHangUp(int peer_id);
   bool IsSendingMessage();
 
@@ -51,7 +51,7 @@ class PC {
   void Close();
   bool ConnectControlSocket();
   boost::asio::ip::tcp::socket* CreateClientSocket(int port);
-  void OnMessageFromPeer(int peer_id, const std::string& message);
+  void OnMessageFromPeer(std::string peer_id, const std::string& message);
 
   // Returns true if the whole response has been read.
   bool ReadIntoBuffer(boost::asio::ip::tcp::socket* socket, std::string* data,
