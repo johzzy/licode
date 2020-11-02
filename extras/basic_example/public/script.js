@@ -88,11 +88,27 @@ const startBasicExample = () => {
   document.getElementById('startButton').hidden = true;
   recording = false;
   console.log('Selected Room', configFlags.room, 'of type', configFlags.type);
-  const config = { audio: true,
-    video: !configFlags.onlyAudio,
-    data: true,
-    screen: configFlags.screen,
-    attributes: {} };
+  // room.remoteStreams.forEach((item) => {
+  //   if (item.local) return; // skip local
+  //   console.log(item.pc.peerConnection.remoteDescription.sdp);
+  //   // pc.peerConnection.remoteDescription.type
+  // });
+  const configs = [
+    { udio: true,
+      video: !configFlags.onlyAudio,
+      data: true,
+      screen: configFlags.screen,
+      attributes: {} },
+   {  video: true, 
+      audio: true, 
+      url:"file:///Users/johnny/Music/hello.mkv", 
+      attributes: {name:'MkvStream'}}];
+  let config_index = 0;
+  if (window.location.href.endsWith("connection_test.html")) {
+    config_index = 1;
+  }
+  const config = configs[config_index];
+  
   // If we want screen sharing we have to put our Chrome extension id.
   // The default one only works in our Lynckia test servers.
   // If we are not using chrome, the creation of the stream will fail regardless.
@@ -101,6 +117,7 @@ const startBasicExample = () => {
   }
   Erizo.Logger.setLogLevel(Erizo.Logger.INFO);
   localStream = Erizo.Stream(config);
+  localStream.setAttributes(config.attributes);
   window.localStream = localStream;
   const createToken = (roomData, callback) => {
     const req = new XMLHttpRequest();
@@ -150,7 +167,7 @@ const startBasicExample = () => {
     room.on('connection-failed', console.log.bind(console));
 
     room.addEventListener('room-connected', (roomEvent) => {
-      const options = { metadata: { type: 'publisher' } };
+      const options = { metadata: { type: 'publisher', source: config_index} };
       if (configFlags.simulcast) options.simulcast = { numSpatialLayers: 2 };
       options.forceTurn = !!configFlags.forceTurn;
       subscribeToStreams(roomEvent.streams);
@@ -174,6 +191,8 @@ const startBasicExample = () => {
 
       document.getElementById('videoContainer').appendChild(div);
       stream.show(`test${stream.getID()}`);
+      console.log(`stream ${JSON.stringify(stream.getAttributes())} ${stream.getID()}`);
+      console.log(`local ${JSON.stringify(localStream.getAttributes())} ${localStream.getID()}`);
     });
 
     room.addEventListener('stream-added', (streamEvent) => {
