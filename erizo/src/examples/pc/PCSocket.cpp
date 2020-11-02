@@ -139,26 +139,23 @@ void PC::parseMessage(std::string *data) {
 	}
 	std::string id = data->substr(found1 + 1, found2 - (found1 + 1));
 	std::string message = data->substr(found2 + 1, data->length());
-	int the_id = atoi(id.c_str());
 	if (method.compare("MSG_FROM_PEER") == 0)
-		OnMessageFromPeer(the_id, message);
+		OnMessageFromPeer(id, message);
 	if (method.compare("BYE") == 0) {
-		callback_->OnPeerDisconnected(the_id);
+		callback_->OnPeerDisconnected(id);
 	}
 
 }
 
-void PC::OnMessageFromPeer(int peer_id, const std::string& message) {
+void PC::OnMessageFromPeer(std::string peer_id, const std::string& message) {
 	callback_->OnMessageFromPeer(peer_id, message);
 
 }
 
-bool PC::SendToPeer(int peer_id, const std::string& message) {
-	printf("SENDING TO %d \n %s\n", peer_id, message.c_str());
-	char* peer[5];
-	sprintf((char*) peer, "%d", peer_id);
+bool PC::SendToPeer(std::string peer_id, const std::string& message) {
+	printf("SENDING TO %s \n %s\n", peer_id.c_str(), message.c_str());
 	std::string msg;
-	msg.append("MSG_TO_PEER;").append((char*) peer).append(";").append(message);
+	msg.append("MSG_TO_PEER;").append(peer_id).append(";").append(message);
 	//	control_socket_->send(msg.c_str(), msg.length());
 	boost::asio::write(*control_socket_,
 			boost::asio::buffer((char*) msg.c_str(), msg.length()));

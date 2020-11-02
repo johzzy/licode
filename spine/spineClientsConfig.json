@@ -1,7 +1,7 @@
 {
-  "basicExampleUrl": "https://localhost/",
+  "basicExampleUrl": "http://localhost:3001",
   "publishConfig" : {
-    "_video":{"file":"file:///YOUR_LICODE_COMPATIBLE_TEST_FILE"},
+    "_video":{"file":"file:///Users/johnny/Music/hello.mkv"},
     "video":{"synthetic":{"audioBitrate": 30000,
              "minVideoBitrate": 10000,
              "maxVideoBitrate": 300000}},
@@ -10,7 +10,7 @@
   },
   "subscribeConfig" : {
     "video":{
-      "recording":"file///YOUR_DESTINATION_FOR_RECORDING"
+      "recording":"file:///Users/johnny/Music/recording.mkv"
     },
     "video": true,
     "audio": true,

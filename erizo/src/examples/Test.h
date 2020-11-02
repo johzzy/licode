@@ -1,5 +1,5 @@
 #include <media/MediaProcessor.h>
-#include <media/utils/RtpUtils.h>
+#include <rtp/RtpUtils.h>
 #include <boost/asio.hpp>
 
 #ifndef TEST_H_
@@ -13,6 +13,7 @@ public:
 
 	void rec();
 	void send(char *buff, int buffSize);
+  void receiveRawData(const RawDataPacket& packet) override;
 private:
 
 	boost::asio::ip::udp::socket* socket_;
@@ -21,7 +22,8 @@ private:
 	boost::asio::ip::udp::resolver::query* query_;
 	boost::asio::io_service* ioservice_;
 	InputProcessor* ip;
-	erizo::RtpParser pars;
+  // erizo::RtpParser pars;
+  erizo::RtpVP8Parser pars;
 
 };
 
