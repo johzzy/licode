@@ -116,18 +116,18 @@ bool SDPReceiver::createSubscriber(std::string peer_id) {
 
 void SDPReceiver::setRemoteSDP(std::string peer_id, const std::string &sdp) {
   if (peer_id == publisherid) {
-    muxer->getPublisher()->setRemoteSdp(sdp);
+    // muxer->getPublisher()->setRemoteSdp(sdp);
   } else {
-    muxer->getSubscriber(peer_id)->setRemoteSdp(sdp);
+    // muxer->getSubscriber(peer_id)->setRemoteSdp(sdp);
   }
 }
 std::string SDPReceiver::getLocalSDP(std::string peer_id) {
   std::string sdp;
   if (peer_id == publisherid) {
-    sdp = muxer->getPublisher()->getLocalSdp();
+    // sdp = muxer->getPublisher()->getLocalSdp();
     // sdp = muxer->getPublisher()->
   } else {
-    sdp = muxer->getSubscriber(peer_id)->getLocalSdp();
+    // sdp = muxer->getSubscriber(peer_id)->getLocalSdp();
   }
   printf("Getting localSDP %s\n", sdp.c_str());
   return sdp;

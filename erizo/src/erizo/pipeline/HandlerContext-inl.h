@@ -224,6 +224,7 @@ class ContextImpl
   // InboundLink overrides
   void read(std::shared_ptr<DataPacket> packet) override {
     auto guard = this->pipelineWeak_.lock();
+    // @see fireRead
     this->handler_->read(this, std::move(packet));
   }
 
@@ -316,6 +317,7 @@ class InboundContextImpl
   // InboundLink overrides
   void read(std::shared_ptr<DataPacket> packet) override {
     auto guard = this->pipelineWeak_.lock();
+    // @see fireRead
     this->handler_->read(this, std::move(packet));
   }
 
