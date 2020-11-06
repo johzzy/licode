@@ -112,7 +112,7 @@ int NicerConnection::ice_connected(void *obj, nr_ice_peer_ctx *pctx) {
   }
   conn->updateIceState(IceState::READY);
   conn->nicer_->IceContextFinalize(conn->ctx_, pctx);
-  conn->nicer_->IcePeerContextDumpState(pctx, 0);
+  // conn->nicer_->IcePeerContextDumpState(pctx, 0);
   return 0;
 }
 
