@@ -32,20 +32,46 @@ node basicServer.js
 
 2. 编译
 ```
-#release
+## 首次编译
+./scripts/installMacDeps.sh
+
+## 常规执行
+./scripts/installNuve.sh
+./scripts/installErizo.sh # 报错修复详见 `报错处理`
+./scripts/installBasicExample.sh
+
+## 启动
+### 首次启动 
+./scripts/initLicode.sh 
+
+### 常规启动
+node nuve/nuveAPI/nuve.js
+node erizo_controller/erizoController/erizoController.js
+node erizo_controller/erizoAgent/erizoAgent.js
+
+### web 客户端
+node extras/basic_example/basicServer.js
+
+## 退出
+killall node
+
+
+############### 内部细节
+## release
 cd $ROOT/erizo/build/release 
 cmake ../../src -DERIZO_BUILD_TYPE=release
-#debug
+## debug
 cd $ROOT/erizo/build/debug 
 cmake ../../src -DERIZO_BUILD_TYPE=debug
 cmake --build .
-#script
+## script
 ./scripts/installErizo.sh -e
 ./scripts/installErizo.sh -a
-#node gyp
+## node gyp
 export ERIZO_HOME=$ROOT/erizo
 cd $ROOT/erizoAPI
 npm install --unsafe-perm
+
 ```
 
 3. 移除 $ROOT/build/libdeps/nvm
@@ -69,4 +95,17 @@ node extras/basic_example/basicServer.js
 RtcpFeedbackGenerationHandler::read
 
 ```
+
+5. 报错处理
+
+clion 配置: 
+    
+    ./scripts/installErizo.sh 调用 generateProject.sh 和 buildProject.sh 
+
+    其等价于编译 licode/erizo/src/CMakeLists.txt, 生成路径为 licode/erizo/build/debug 和 licode/erizo/build/release
+
+编译报错:
+
+    编译报错 error: no member named 'url' in 'AVFormatContext'
+    注释 scripts/installMacDeps.sh 中 install_mediadeps/install_mediadeps_nogpl 函数 关于 libav 的安装
 
