@@ -1,7 +1,8 @@
 /* global require, setInterval, clearInterval, exports */
 
-console.log(`dirname=${__dirname}`)
-process.chdir(__dirname)
+// eslint-disable-next-line no-console
+console.log(`dirname=${__dirname}`);
+process.chdir(__dirname);
 
 /* eslint-disable no-param-reassign */
 

@@ -1,7 +1,8 @@
 /* global require, __dirname, console */
 
-console.log(`dirname=${__dirname}`)
-process.chdir(__dirname)
+// eslint-disable-next-line no-console
+console.log(`dirname=${__dirname}`);
+process.chdir(__dirname);
 
 /* eslint-disable import/no-extraneous-dependencies, no-console */
 
