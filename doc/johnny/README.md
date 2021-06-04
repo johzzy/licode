@@ -50,7 +50,8 @@ node erizo_controller/erizoController/erizoController.js
 node erizo_controller/erizoAgent/erizoAgent.js
 
 ### web 客户端
-node extras/basic_example/basicServer.js
+#node extras/basic_example/basicServer.js
+node extras/client/basicServer.js
 
 ## 退出
 killall node
